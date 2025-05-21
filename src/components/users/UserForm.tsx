@@ -140,7 +140,7 @@ const UserForm: React.FC<UserFormProps> = ({
                     <SelectValue placeholder="Select manager" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">None</SelectItem>
+                    <SelectItem value="none">None</SelectItem>
                     {managers.map((manager) => (
                       <SelectItem key={manager.id} value={manager.id}>
                         {manager.name}
@@ -162,7 +162,7 @@ const UserForm: React.FC<UserFormProps> = ({
                     <SelectValue placeholder="Select team leader" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">None</SelectItem>
+                    <SelectItem value="none">None</SelectItem>
                     {teamLeaders.map((tl) => (
                       <SelectItem key={tl.id} value={tl.id}>
                         {tl.name}
