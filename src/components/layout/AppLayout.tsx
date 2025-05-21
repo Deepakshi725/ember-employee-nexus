@@ -13,19 +13,20 @@ const AppLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(!isMobile);
   const [mounted, setMounted] = useState(false);
 
-  // Redirect to login if not authenticated
-  if (!state.isAuthenticated) {
-    return <Navigate to="/login" />;
-  }
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
   // Animation effect on mount
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Handle sidebar toggle
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  // Render content based on authentication state
+  if (!state.isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div className={cn(
@@ -37,7 +38,6 @@ const AppLayout: React.FC = () => {
       <main
         className={cn(
           "flex-1 flex flex-col transition-all duration-300 backdrop-blur-sm",
-          sidebarOpen ? (isMobile ? "ml-0" : "ml-64") : "ml-0",
           isMobile ? "ml-0" : sidebarOpen ? "ml-64" : "ml-16"
         )}
       >
