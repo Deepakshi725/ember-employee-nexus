@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { 
-  User, Users, Settings, LogOut, Home, Briefcase,
-  ChevronDown, ChevronRight, Bell, Menu, X
+  User, Users, LogOut, Home, Briefcase,
+  Menu, X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
@@ -60,7 +60,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
     const baseItems = [
       { to: "/dashboard", icon: <Home size={20} />, label: "Dashboard" },
       { to: "/profile", icon: <User size={20} />, label: "My Profile" },
-      { to: "/notifications", icon: <Bell size={20} />, label: "Notifications" },
     ];
 
     // User management permissions based on role
@@ -72,22 +71,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
       });
     }
 
-    // Settings access for admin roles
-    if (role === "master" || role === "admin") {
-      baseItems.push({ 
-        to: "/settings", 
-        icon: <Settings size={20} />, 
-        label: "Settings" 
-      });
-    }
-
     return baseItems;
   };
 
   return (
     <div
       className={cn(
-        "fixed inset-y-0 left-0 z-50 bg-sidebar flex flex-col transition-all duration-300 ease-in-out",
+        "fixed inset-y-0 left-0 z-50 bg-sidebar flex flex-col transition-all duration-300 ease-in-out shadow-lg",
         isOpen ? "w-64" : isMobile ? "w-0" : "w-16",
         isMobile && !isOpen ? "-translate-x-full" : "translate-x-0"
       )}
@@ -100,7 +90,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
             EMS
           </h1>
         </div>
-        <Button variant="ghost" size="icon" onClick={onToggle} className="text-sidebar-foreground">
+        <Button variant="ghost" size="icon" onClick={onToggle} className="text-sidebar-foreground hover:bg-primary/10">
           {isOpen ? <X size={20} /> : <Menu size={20} />}
         </Button>
       </div>
@@ -120,7 +110,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
       <div className="p-4 border-t border-sidebar-border mt-auto">
         <Button
           variant="ghost"
-          className="w-full justify-start sidebar-link"
+          className="w-full justify-start sidebar-link hover:bg-primary/10"
           onClick={logout}
         >
           <LogOut size={20} />

@@ -37,9 +37,9 @@ const UserForm: React.FC<UserFormProps> = ({
   const [tlId, setTlId] = useState(user?.tlId || "");
 
   // Only allow selecting roles the current user can manage
-  const availableRoles: UserRole[] = ["user", "tl", "manager", "admin", "master"].filter(
+  const availableRoles = ["user", "tl", "manager", "admin", "master"].filter(
     (r) => canManageRole(r as UserRole)
-  );
+  ) as UserRole[];
 
   // Mock data for managers and TLs
   const managers = [
@@ -80,9 +80,9 @@ const UserForm: React.FC<UserFormProps> = ({
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto card-gradient">
+    <Card className="w-full max-w-2xl mx-auto bg-gradient-to-br from-black/40 to-black/60 backdrop-blur-sm border border-white/10 shadow-xl">
       <CardHeader>
-        <CardTitle>{user ? "Edit User" : "Add New User"}</CardTitle>
+        <CardTitle className="text-gradient">{user ? "Edit User" : "Add New User"}</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -95,6 +95,7 @@ const UserForm: React.FC<UserFormProps> = ({
                 onChange={(e) => setName(e.target.value)}
                 placeholder="John Doe"
                 required
+                className="bg-black/30 border-white/10 focus:border-primary/50"
               />
             </div>
 
@@ -107,6 +108,7 @@ const UserForm: React.FC<UserFormProps> = ({
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="john@example.com"
                 required
+                className="bg-black/30 border-white/10 focus:border-primary/50"
               />
             </div>
 
@@ -116,10 +118,10 @@ const UserForm: React.FC<UserFormProps> = ({
                 value={role}
                 onValueChange={(value) => setRole(value as UserRole)}
               >
-                <SelectTrigger id="role">
+                <SelectTrigger id="role" className="bg-black/30 border-white/10">
                   <SelectValue placeholder="Select role" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-black/90 border-white/10">
                   {availableRoles.map((r) => (
                     <SelectItem key={r} value={r}>
                       {r.charAt(0).toUpperCase() + r.slice(1)}
@@ -136,10 +138,10 @@ const UserForm: React.FC<UserFormProps> = ({
                   value={managerId}
                   onValueChange={setManagerId}
                 >
-                  <SelectTrigger id="managerId">
+                  <SelectTrigger id="managerId" className="bg-black/30 border-white/10">
                     <SelectValue placeholder="Select manager" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-black/90 border-white/10">
                     <SelectItem value="none">None</SelectItem>
                     {managers.map((manager) => (
                       <SelectItem key={manager.id} value={manager.id}>
@@ -158,10 +160,10 @@ const UserForm: React.FC<UserFormProps> = ({
                   value={tlId}
                   onValueChange={setTlId}
                 >
-                  <SelectTrigger id="tlId">
+                  <SelectTrigger id="tlId" className="bg-black/30 border-white/10">
                     <SelectValue placeholder="Select team leader" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-black/90 border-white/10">
                     <SelectItem value="none">None</SelectItem>
                     {teamLeaders.map((tl) => (
                       <SelectItem key={tl.id} value={tl.id}>
@@ -175,10 +177,10 @@ const UserForm: React.FC<UserFormProps> = ({
           </div>
 
           <div className="flex justify-end space-x-2">
-            <Button type="button" variant="outline">
+            <Button type="button" variant="outline" className="border-white/20 hover:bg-white/5">
               Cancel
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting} className="bg-primary/80 hover:bg-primary">
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

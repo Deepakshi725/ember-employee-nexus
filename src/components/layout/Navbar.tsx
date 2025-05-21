@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Bell, Menu, User } from "lucide-react";
+import { Menu, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface NavbarProps {
   onToggleSidebar: () => void;
@@ -19,6 +20,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
   const { state, logout } = useAuth();
+  const navigate = useNavigate();
   const user = state.user;
 
   if (!user) return null;
@@ -46,6 +48,10 @@ const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
     }
   };
 
+  const handleProfileClick = () => {
+    navigate("/profile");
+  };
+
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-16 items-center px-4">
@@ -61,28 +67,20 @@ const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
         <div className="flex-1" />
 
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="relative">
-            <Bell size={20} />
-            <span className="absolute top-1 right-1 flex h-2 w-2">
-              <span className="animate-ping absolute h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="rounded-full h-2 w-2 bg-primary"></span>
-            </span>
-          </Button>
-
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="relative h-10 w-10 rounded-full"
+                className="relative h-10 w-10 rounded-full hover:bg-secondary/20"
               >
-                <Avatar className="h-10 w-10">
+                <Avatar className="h-10 w-10 border-2 border-primary/10">
                   <AvatarFallback className="bg-primary/10 text-primary">
                     {getInitials(user.name)}
                   </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
                   <p className="text-sm font-medium leading-none">{user.name}</p>
@@ -101,11 +99,9 @@ const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <a href="/profile">
-                  <User className="mr-2 h-4 w-4" />
-                  Profile
-                </a>
+              <DropdownMenuItem onClick={handleProfileClick}>
+                <User className="mr-2 h-4 w-4" />
+                Profile
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => logout()}>
                 Log out

@@ -17,7 +17,6 @@ import UsersPage from "./pages/UsersPage";
 import AddUserPage from "./pages/AddUserPage";
 import EditUserPage from "./pages/EditUserPage";
 import ProfilePage from "./pages/ProfilePage";
-import NotificationsPage from "./pages/NotificationsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,7 +39,6 @@ const App = () => (
               <Route path="/users/add" element={<AddUserPage />} />
               <Route path="/users/edit/:id" element={<EditUserPage />} />
               <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/notifications" element={<NotificationsPage />} />
             </Route>
             
             <Route path="*" element={<NotFound />} />
